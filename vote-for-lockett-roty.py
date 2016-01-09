@@ -33,14 +33,14 @@ class PepsiVoter:
         self.browser.quit()
 
 
-def pepsi_auto_vote(poll_url, player, votes):
+def pepsi_auto_vote(poll_url, player, votes=-1):
     v = PepsiVoter(poll_url=poll_url, player=player)
     v.start_browser()
     v.open_voting_page()
     v.hide_video()
 
     vote_counter = 0
-    while vote_counter < votes:
+    while vote_counter < votes or votes == -1:
         v.cast_vote()
         vote_counter += 1
         print(vote_counter)
