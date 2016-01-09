@@ -11,6 +11,7 @@ class PepsiVoter:
     def start_browser(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
+        self.browser.set_window_size(100, 300)
 
     def open_voting_page(self):
         self.browser.get(self.poll_url)
