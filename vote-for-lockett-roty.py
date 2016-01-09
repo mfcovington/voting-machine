@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import ElementNotVisibleException
 
 
 class PepsiVoter:
@@ -29,6 +30,9 @@ class PepsiVoter:
         close_x = self.browser.find_element_by_class_name('close-x')
         close_x.click()
 
+    def refresh_browser(self):
+        self.browser.refresh()
+
     def close_browser(self):
         self.browser.quit()
 
@@ -41,9 +45,16 @@ def pepsi_auto_vote(poll_url, player, votes=-1):
 
     vote_counter = 0
     while vote_counter < votes or votes == -1:
-        v.cast_vote()
-        vote_counter += 1
-        print(vote_counter)
+        try:
+            v.cast_vote()
+        except ElementNotVisibleException as e:
+            print(e)
+            print('Refreshing Browser...')
+            v.refresh_browser()
+            v.hide_video()
+        else:
+            vote_counter += 1
+            print(vote_counter)
 
     v.close_browser()
 
