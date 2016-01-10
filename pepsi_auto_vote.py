@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.common.exceptions import ElementNotVisibleException
 
@@ -38,7 +40,7 @@ class PepsiVoter:
         self.browser.quit()
 
 
-def pepsi_auto_vote(poll_url, player, votes=-1):
+def pepsi_auto_vote(poll_url, player, votes=-1, delay=0):
     v = PepsiVoter(poll_url=poll_url, player=player)
     v.start_browser()
     v.open_voting_page()
@@ -56,6 +58,7 @@ def pepsi_auto_vote(poll_url, player, votes=-1):
         else:
             vote_counter += 1
             print(vote_counter)
+            time.sleep(delay)
 
     v.close_browser()
 
